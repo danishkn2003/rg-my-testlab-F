@@ -76,7 +76,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   os_disk {
     name                 = "poc-vm-osdisk"
     caching              = "ReadWrite"
-    storage_account_type = "standard_LRS"
+    storage_account_type = "Standard_LRS"
   }
   source_image_reference {
     publisher = "Canonical"
