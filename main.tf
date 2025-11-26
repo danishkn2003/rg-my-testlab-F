@@ -13,7 +13,7 @@ resource "azurerm_key_vault" "kv" {
   resource_group_name       = azurerm_resource_group.rg.name
   tenant_id                 = var.tenant_id
   sku_name                  = "standard"
-  enable_rbac_authorization = true
+  rbrbac_authorization_enabled = true
 }
 
 resource "azurerm_role_assignment" "kv_access" {
@@ -76,6 +76,12 @@ resource "azurerm_linux_virtual_machine" "vm" {
   os_disk {
     name                 = "poc-vm-osdisk"
     caching              = "ReadWrite"
-    storage_account_type = "standard_lrs"
+    storage_account_type = "standard_LRS"
+  }
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "18.04-LTS"
+    version   = "latest"
   }
 }
