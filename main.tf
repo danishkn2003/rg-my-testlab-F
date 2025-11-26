@@ -17,7 +17,7 @@ provider "azurerm" {
   features {}
 }
 
-resource "azurerm_resource_group" "poc" {
+data "azurerm_resource_group" "poc" {
   name     = "rg-my-testlab-F"
   location = var.location
 }
