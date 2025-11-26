@@ -2,15 +2,17 @@ provider "azurerm" {
   features {}
 }
 
-resource "azurerm_resource_group" "rg" {
-  name     = "rg-terraform-poc-f"
-  location = "northeurope"
-}
+#resource "azurerm_resource_group" "rg" {
+#  name     = "rg-terraform-poc-f"
+#  location = "northeurope"
+#}
+
+
 
 resource "azurerm_key_vault" "kv" {
   name                       = "kv-terraform-poc-f"
-  location                   = azurerm_resource_group.rg.location
-  resource_group_name        = azurerm_resource_group.rg.name
+  location                   = var.location
+  resource_group_name        = var.resource_group_name
   tenant_id                  = var.tenant_id
   sku_name                   = "standard"
   rbac_authorization_enabled = true
@@ -43,21 +45,21 @@ data "azurerm_key_vault_secret" "vm_password" {
 resource "azurerm_virtual_network" "vnet" {
   name                = "poc-vnet"
   address_space       = ["10.0.0.0/16"]
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = var.location
+  resource_group_name = var.resource_group_name
 }
 
 resource "azurerm_subnet" "subnet" {
   name                 = "poc-subnet"
-  resource_group_name  = azurerm_resource_group.rg.name
+  resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.0.1.0/24"]
 }
 
 resource "azurerm_network_interface" "nic" {
   name                = "poc-nic"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = var.location
+  resource_group_name = var.resource_group_name
 
   ip_configuration {
     name                          = "internal"
@@ -67,8 +69,8 @@ resource "azurerm_network_interface" "nic" {
 }
 resource "azurerm_linux_virtual_machine" "vm" {
   name                  = "pocvm01"
-  resource_group_name   = azurerm_resource_group.rg.name
-  location              = azurerm_resource_group.rg.location
+  resource_group_name   = var.resource_group_name
+  location              = var.location
   size                  = "Standard_B2s"
   admin_username        = "azureadmin"
   admin_password        = data.azurerm_key_vault_secret.vm_password.value
