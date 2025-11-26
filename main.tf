@@ -7,7 +7,7 @@ terraform {
   }
   backend "azurerm" {
     resource_group_name  = "rg-my-testlab-F"
-    storage_account_name = "pocterraformstate"
+    storage_account_name = "pocterraformstate635287"
     container_name       = "tfstate"
     key                  = "terraform.tfstate"
   }
@@ -28,4 +28,11 @@ resource "azurerm_storage_account" "poc" {
   location                 = azurerm_resource_group.poc.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
+}
+
+
+
+variables.tf:
+variable "location" {
+  default = "northeurope"
 }
