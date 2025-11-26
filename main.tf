@@ -29,10 +29,3 @@ resource "azurerm_storage_account" "poc" {
   account_tier             = "Standard"
   account_replication_type = "LRS"
 }
-
-
-
-variables.tf:
-variable "location" {
-  default = "northeurope"
-}
