@@ -8,12 +8,12 @@ resource "azurerm_resource_group" "rg" {
 }
 
 resource "azurerm_key_vault" "kv" {
-  name                         = "kv-terraform-poc-f"
-  location                     = azurerm_resource_group.rg.location
-  resource_group_name          = azurerm_resource_group.rg.name
-  tenant_id                    = var.tenant_id
-  sku_name                     = "standard"
-  rbrbac_authorization_enabled = true
+  name                       = "kv-terraform-poc-f"
+  location                   = azurerm_resource_group.rg.location
+  resource_group_name        = azurerm_resource_group.rg.name
+  tenant_id                  = var.tenant_id
+  sku_name                   = "standard"
+  rbac_authorization_enabled = true
 }
 
 resource "azurerm_role_assignment" "kv_access" {
